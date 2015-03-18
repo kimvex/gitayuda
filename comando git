@@ -1,0 +1,250 @@
+////////////////////////////
+git remote add origin URL //
+refleja el repositorio en //
+local, es importante      //
+colocar siempre origin    //
+para que sepamos donde es //
+el origen.                //
+////////////////////////////
+git fetch origin          //
+Descarga el historial del //
+fork para que tengamos    //
+actualizado nuestro       //
+proyecto local y no haya  //
+problemas al subirlo a    //
+github                    //
+////////////////////////////
+git fetch upstream        //
+descarga los archivos     //
+del historial del         //
+repositorio principal para//
+que nuestro proyecto      //
+siempre este actualizado  //
+a la ultima version del   //
+original                  //
+////////////////////////////
+git config --global --list//
+Enumera todos los cambios //
+hechos al global         //
+//////////////////////////
+git add -A             //
+agrega todos los       //
+archivos al staging    //
+area, el lugar antes   //
+de subir o actualizar  //
+los archivos           //
+/////////////////////////
+git commit -m ""       //
+agrega los commit's y  //
+les da un comentario   //
+/////////////////////////////////////////////////////////////////
+git config --global alias.nicelog 'log --oneline --graph --all'//
+muestra de forma grafica en la terminal como esta hecho los    //
+commits y los branch que se han hecho y los que se han         //
+fucionado                                                      //
+/////////////////////////////////////////////////////////////////
+git init              //
+Crea una carpeta .git //
+en el proyecto, la    //
+que contendra los     //
+archivos importantes  //
+////////////////////////
+git log > commits.txt //
+crea un archivo con   //
+los comits hechos     //
+////////////////////////
+git checkout (commit) //
+muestra el commit     //
+y te lleva al estado  //
+del proyecto cuando se//
+realizo aquel commit  //
+////////////////////////
+git checkout master   //
+Te lleva de regreso   //
+al estado actual del  //
+proyecto              //
+////////////////////////
+git commit -am ""     //
+crea el commit agrega //
+los archivos y le da  //
+un comentario al      //
+commit                //
+////////////////////////
+git branch            //
+muestra las ramas que//
+existen               //
+////////////////////////
+git checkout (branch) //
+cambia a la rama que  //
+se le diga            //
+/////////////////////////////////////////////////////////
+Para combinar las branch debe de estar en la branch que//
+quiera combinar y agregar otra branch combinada con    //
+git merge branch                                       //
+/////////////////////////////////////////////////////////
+git origin master     //
+genera los cambios y  //
+crea el espejo        //
+origin/master que     //
+reflejara nuestro fork//
+en github             //
+///////////////////////////
+git merge upstream/master//
+combina la rama del      //
+repositorio original con //
+la de nuetra rama local  //
+///////////////////////////
+git push origin master   //
+esto sube nuestro        //
+proyecto actualizado a   //
+nuestro fork que es      //
+origin                   //
+///////////////////////////
+git branch --merged      //
+muestra con cual branch  //
+se ha fucionado el branch//
+actual                   //
+///////////////////////////
+git branch -a agrega     //
+todas nuestras ramas     //
+o observar nuestras ramas//
+///////////////////////////
+/////////////////////////////////////////////////////////////////
+paso 1: Si no tienes el repositorio en tu disco local	       //
+clonalo con:                                                   //
+git clone URL						       //
+							       //
+paso 2: Comprobar los commits con:                             //
+git log                                                        //
+                                                               //
+paso 3: subir cambios en caso de que aun no tengamos           //
+acceso al subir archivos ni hacer cosas es porque ha de faltar //
+git init                                                       //
+                                                               //
+paso 4: Agregamos la conexion a nuestro repositorio(fork) de   //
+github con:                                                    //
+git remote add origin URL                                      //
+                                                               //
+paso 5: fucionamos nuestro branch con el del reflejo que       //
+bajo del fork con:                                             //
+git merge origin/master                                        //
+                                                               //
+paso 6: generamos los cambios                                  //
+git commit-am "[mensaje]"                                      //
+                                                               ///////
+paso 7: volvemos a fusionar nuestros archivos con el reflejo con:   //
+git merge origin/master                                             //
+                                                                    //
+paso 8: Subimos los cambios y los subimos a nuestro fork            //
+git push origin master                                              //
+"En este paso recordar que si alguien del equipo agrego un nuevo"   // 
+"elemento o modifico habria que agregarlo para que se fucione con"  //
+"el merge"                                                          //
+//////////////////////////////////////////////////////////////////////
+paso 1: hacemos remotes de origin y upstream                        //
+paso 2: reflejamos con fetch origin/master y ustream/master         //
+paso 3: fusionamos ustream con master usando merge                  //
+paso 4: hacemos push a nuestro fork                                 //
+paso 5: volvemos a hacer fetch cuando comencemos y cuando terminemos//
+//////////////////////////////////////////////////////////////////////
+git pull origin master                //
+jala todo el repositorio como clonar  //
+a nuestra pc                          //
+////////////////////////////////////////
+para ver la clave ssh publica se le da//
+cat id_rsa.pub                        //
+////////////////////////////////////////
+para darle todos los permisos al      //
+post-commit del hook es:              //
+chmod +x post-commit                  //
+//////////////////////////////////////////
+CONEXION A SERVIDOR REMOTO DE PRODUCCION//
+***************************************-//
+Estando en la carpeta ~ en la terminal  //
+se coloca ssh y colocamos:              //
+usuraio@server                          //
+le damos que si/yes y luego la          //
+contraseña y esperamos a que se realice //
+la conexion                             //
+////////////////////////////////////////////
+Cuando entremos por primera vez creamos un//
+ssh-keygen                                //
+la dejamos sin contraseña para que        //
+no halla problemas para el automatic      //
+diplyment-- eso es en el passphrase       //
+////////////////////////////////////////////
+Creamos un archivo .gitignore con touch   //
+con vim le agregamos lo siguiente al      //     
+archivo:                                  //
+*.sh --"con eso le decimos que no suba"   //
+"los archivos que tienen .sh"             //
+////////////////////////////////////////////
+Creamos el archivo deploy.sh              //
+////////////////////////////////////////////
+Para que haga el deploy automatico al     //
+servidor de produccion se creara el hook  //
+post-commit pero en caso de que ya lo     //
+tengamos ahora solo tenemos que hacer     //
+es agregar otras instrucciones por ahora  //
+le crearemos todo el post-commit con todo //
+los comandos:                             //
+#!/bin/sh                                 //
+git push origin master                    //
+ssh usuario@servidor 'bash -s' < deploy.sh//
+"----------------------------------------"////
+"ssh usuario@servidor crea la conexion   "  //
+"remota a nuestro servidor de produccion"   //
+"'bash -s' ejecuta una terminal"            //
+"< deploy.sh le dice el archivo que"        //
+"abrirar la terminal"                       //
+--------------------------------------------//
+autorizamos el hook con chmod +x post-commit//
+//////////////////////////////////////////////
+Ahora le daremos las instrucciones al       //
+deploy.sh usando vim, las instrcucciones    //
+son las siguientes:                         //
+#!/bin/sh				    //
+cd ~/webapp/portafolio			    //
+git init                                    //
+git remote add git@github.com:kimvex/n.git  //
+git pull origin master                      //
+"------------------------------------------"//
+"#!/bin/sh le decimos cual es el interprete"//
+"cd ~/carpetadondeestanproyectos/proyecto"  //
+"git init iniciamos git en la carpeta del"  //
+"proyecto"                                  //
+"git remote add git@github.com:kimvex/n.git"//
+"hacemos la conexion a github con el ssh"   //
+"git pull origin master descargamos los"    //
+"archivos del servidor"                     //
+//////////////////////////////////////////////
+DEPLOY TOTAL EN SERVER -En caso de que no   //
+te puedas conectar con github y no quieras  //
+usar bitvoket.				    //
+ssh usuario@servidor	   	            //
+cd webapps 				    //
+"creamos 2 carpetas en el server"           //
+"nos conectamos al servidor por ssh"        ////////////////////
+---------------generando bar repository en el server          //
+En la carpeta que usaremos como bar repository inicamos git   //
+git init --bare --share                                       //
+"--bare es para que funcione como bar repository"             //
+"--share es para que varios usuarios puedan hacer push"       //
+-------------Carpeta del proyecto en el server----------------//
+Iniciamos git                                                 //
+git init                                                      //
+"Lo conectamos al servidor remoto, pero como en este caso es" //
+"el mismo servidor para referirnos al server remoto usaremos" //
+"un ruta relativa."                                           //
+git add remote origin ../gitcentral                           //
+git pull origin master                                        //
+-------------repositorio local--------------------------------//
+esto lo haremos en la carpeta del proyecto en nuestra pc      /////////////////////
+git remote add origin usuario@servidor:/home/usuario/webapps/carpetaBarRepository//
+git push origin master                      ///////////////////////////////////////
+//////////////////////////////////////////////
+
+
+
+
+
